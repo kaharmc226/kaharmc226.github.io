@@ -1,4 +1,6 @@
-var map = L.map('map').setView([-3.9884109568994335, 122.52304295831928], 10);
+// Example for Web Mercator (EPSG:3857)
+var crs = L.CRS.EPSG3857;
+var map = L.map('map', { crs: crs }).setView([-3.9884109568994335, 122.52304295831928], 13);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
