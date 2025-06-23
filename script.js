@@ -12,4 +12,4 @@ var imageBounds = [
 ];
 
 // Add the PNG overlay
-var overlay = L.imageOverlay('New Folder/hasil.png', imageBounds).addTo(map);
+var overlay = L.imageOverlay('Maps/hasil.png', imageBounds).addTo(map);
