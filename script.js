@@ -5,9 +5,11 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-d3.text("raster.tif", function (asc) {
-    var s = L.ScalarField.fromASCIIGrid(asc);
-    var layer = L.canvasLayer.scalarField(s).addTo(map);
- 
-    map.fitBounds(layer.getBounds());
-});
+// Define the image bounds (southwest and northeast corners)
+var imageBounds = [
+    [460851.497, 9549904.311], // southwest
+    [438756.099, 9568134.933]  // northeast
+];
+
+// Add the PNG overlay
+var overlay = L.imageOverlay('New Folder/hasil.png', imageBounds).addTo(map);
