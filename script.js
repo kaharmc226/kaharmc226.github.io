@@ -8,11 +8,14 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Example: Converting UTM 51S (300000, 7395000) to WGS84
+var utm_ne = 
+var [lng, lat] = proj4("EPSG:32751", "EPSG:4326", [300000, 7395000]);
+console.log(lat, lng); // e.g., -23.5505, -46.6333
 
 // Define the image bounds (southwest and northeast corners)
 var imageBounds = [
-    [438782.557, 9549938.178], // southwest
-    [460822.393, 9568035.714]  // northeast
+    [460851.497, 9549904.311], // southwest
+    [438756.099, 9568134.933]  // northeast
 ];
 
 // Add the PNG overlay
