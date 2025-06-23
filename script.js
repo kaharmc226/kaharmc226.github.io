@@ -1,5 +1,14 @@
 // Example for Web Mercator (EPSG:3857)
-var crs = L.CRS.EPSG3857;
+var crs = new L.Proj.CRS(
+    'EPSG:32751',  // UTM Zone 51S
+    proj4.defs('EPSG:32751'),  // Updated PROJ4 definition
+    {
+        resolutions: [  // Adjust resolutions as needed
+            8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1
+        ]
+    }
+);
+
 var map = L.map('map', { crs: crs }).setView([-3.9884109568994335, 122.52304295831928], 13);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -8,15 +17,26 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Example: Converting UTM 51S (300000, 7395000) to WGS84
-var utm_ne = 
-var [lng, lat] = proj4("EPSG:32751", "EPSG:4326", [300000, 7395000]);
-console.log(lat, lng); // e.g., -23.5505, -46.6333
-
+// Replace the projection definition with this:
+proj4.defs("EPSG:32751", 
+    "+proj=utm +zone=51 +south +datum=WGS84 +units=m +no_defs"
+);
 // Define the image bounds (southwest and northeast corners)
-var imageBounds = [
-    [460851.497, 9549904.311], // southwest
-    [438756.099, 9568134.933]  // northeast
-];
+ var top = 9567816.47512;    // Northing (Y)
+        var bottom = 9548204.24313;  // Northing (Y)
+        var left = 437857.084245;   // Easting (X)
+        var right = 461317.870398;  // Easting (X)
+
+        // 5. Convert to Leaflet's SW/NE format [ [SW], [NE] ]
+        var imageBounds = [
+            [bottom, left],  // SW corner (Northing, Easting)
+            [top, right]     // NE corner (Northing, Easting)
+        ];
 
 // Add the PNG overlay
-var overlay = L.imageOverlay('Maps/hasil.png', imageBounds).addTo(map);
+L.imageOverlay('Maps/miringtp.png', imageBounds, {
+    opacity: 0.8,
+    interactive: true
+}).addTo(map);
+
+map.fitBounds(imageBounds);
